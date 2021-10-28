@@ -4,7 +4,6 @@ from django import forms
 
 
 class ShopUserLoginForm(AuthenticationForm):
-
     class Meta:
         model = ShopUser
         field = ('username', 'password')
@@ -22,7 +21,7 @@ class ShopUserRegisterForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'avatar', 'email', 'age', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
-        super().__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
@@ -31,6 +30,16 @@ class ShopUserRegisterForm(UserCreationForm):
         data = self.cleaned_data['age']
         if data < 18:
             raise forms.ValidationError('Слишком молод!')
+        return data
+
+    def clean_first_name(self):
+        data = self.cleaned_data['first_name']
+        if len(data) > 15:
+            raise forms.ValidationError('Превышена максимальная длина имени! Повторите ввод')
+
+        if not data.isalpha():
+            raise forms.ValidationError('Используйте только буквы!')
+
         return data
 
 
@@ -58,10 +67,8 @@ class ShopUserEditForm(UserChangeForm):
         data = self.cleaned_data['first_name']
         if len(data) > 15:
             raise forms.ValidationError('Превышена максимальная длина имени! Повторите ввод')
-        for letter in data:
-            if letter.isalpha is not True:
-                raise forms.ValidationError('Используйте только буквы!')
+
+        if not data.isalpha():
+            raise forms.ValidationError('Используйте только буквы!')
 
         return data
-
-
