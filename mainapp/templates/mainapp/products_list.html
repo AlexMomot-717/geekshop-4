@@ -26,7 +26,7 @@
         <br>
         {% for product in products %}
           <div class="block">
-            <a href="{% url 'basket:add' product.pk %}">
+            <a href="{% url 'mainapp:product' product.pk %}">
               <div class="text">
                 <img src="{% static 'img/icon-hover.png' %}" alt="hover">
                 <h4>{{ product.name }}</h4>

@@ -6,6 +6,9 @@
     <form class="form-horizontal" action="{% url 'auth:login' %}" method="post">
         {% csrf_token %}
         {{ login_form.as_p }}
+        {% if next %}
+        <input type="hidden" name="next" value="{{ next }}" />
+        {% endif %}
         <br>
         <input type="submit" class="btn btn-primary" value="войти">
     </form>
