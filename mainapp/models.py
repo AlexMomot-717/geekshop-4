@@ -1,9 +1,13 @@
 from django.db import models
 
 
+# NULLABLE = {'null': True, 'blank': True}
+
+
 class ProductCategory(models.Model):
     name = models.CharField(max_length=64, unique=True, verbose_name='название')
     description = models.TextField(verbose_name='описание')
+    is_active = models.BooleanField(default=True)
 
 
 
@@ -25,6 +29,10 @@ class Product(models.Model):
     description = models.TextField(verbose_name='описание')
     price = models.DecimalField(decimal_places=2, max_digits=10, default=0, verbose_name='цена')
     quantity = models.PositiveSmallIntegerField(default=0, verbose_name='количество')
+    is_active = models.BooleanField(default=True)
+
+    # updated_at = models.DateTimeField(auto_now=True, **NULLABLE)
+    # created_at = models.DateTimeField(auto_now_add=True, **NULLABLE)
 
 
     def __str__(self):

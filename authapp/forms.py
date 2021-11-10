@@ -6,7 +6,7 @@ from django import forms
 class ShopUserLoginForm(AuthenticationForm):
     class Meta:
         model = ShopUser
-        field = ('username', 'password')
+        fields = ('username', 'password')
 
     def __init__(self, *args, **kwargs):
         super().__init__(self, *args, **kwargs)

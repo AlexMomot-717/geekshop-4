@@ -1,0 +1,19 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+  <div class="user_delete">
+      {% if object.is_active %}
+          Уверены, что хотите удалить {{ object.get_full_name }}?
+      {% else %}
+          Уверены, что хотите восстановить пользователя?
+      {% endif %}
+
+      <form method="post">
+      {% csrf_token %}
+      <input class="btn btn-danger" type="submit" value="Уверен">
+      </form>
+      <a href="{% url 'adminapp:user_list' %}" class="btn btn-success">Отмена</a>
+  </div>
+{% endblock %}
