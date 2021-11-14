@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from basketapp.models import Basket
 from mainapp.models import *
 from django.shortcuts import get_object_or_404
@@ -39,8 +39,8 @@ def contact(request):
     return render(request, 'mainapp/contact.html', context)
 
 
-def products(request, pk=None):
-
+def products(request, pk=None, page=1):
+# def products(request, pk=None):  # через передачу GET-параметров.
     title = 'Продукты'
     links_menu = ProductCategory.objects.all()
 
@@ -55,11 +55,20 @@ def products(request, pk=None):
             category_item = get_object_or_404(ProductCategory, pk=pk)
             products_list = Product.objects.filter(category__pk=pk).order_by('price')
 
+        # page = request.GET.get('p', 1)  # через передачу GET-параметров.
+        paginator = Paginator(products_list, 2)
+        try:
+            products_paginator = paginator.page(page)
+        except PageNotAnInteger:
+            products_paginator = paginator.page(1)
+        except EmptyPage:
+            products_paginator = paginator.page(paginator.num_pages)
+
         context = {
             'title': title,
             'links_menu': links_menu,
             'category': category_item,
-            'products': products_list,
+            'products': products_paginator,
             'basket': get_basket(request.user)
         }
 

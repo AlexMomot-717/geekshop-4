@@ -19,6 +19,14 @@ class ProductCategory(models.Model):
         verbose_name_plural = 'категории'
         ordering = ('-id',)
 
+    def delete(self):
+        if self.is_active:
+            self.is_active = False
+        else:
+            self.is_active = True
+
+        self.save()
+
 
 class Product(models.Model):
     objects = None
@@ -37,6 +45,14 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.name} ({self.category.name})'
+
+    def delete(self):
+        if self.is_active:
+            self.is_active = False
+        else:
+            self.is_active = True
+
+        self.save()
 
 
 

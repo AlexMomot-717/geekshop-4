@@ -4,10 +4,12 @@
 {% block content %}
  <form class="form-horizontal" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ category_form.as_p }}
+    {{ form.as_p }}
     <input class="btn btn-primary" type="submit" value="Сохранить">
   </form>
   <button class="btn btn-warning">
-      Назад
+      <a href={% url 'adminapp:category_list' %}>
+        Назад
+      </a>
   </button>
 {% endblock %}
