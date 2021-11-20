@@ -23,4 +23,13 @@
       {% endif %}
     </a>
   </li>
+  <li>
+    <a href="#" class="basket">
+      <br>
+        {% if basket %}
+        {{ basket.0.total_cost|floatformat:0 }}руб
+        {{ basket.0.total_quantity }}шт
+        {% endif %}
+    </a>
+  </li>
 </ul>

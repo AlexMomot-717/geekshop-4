@@ -12,9 +12,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+dot_env = BASE_DIR / '.env'
+load_dotenv(dotenv_path=dot_env)
+
+# os.getenv('')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -23,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mo_p-$2nq-e7a)9l4cla#7i124d3d#&j$7)$417fmemzralivd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (os.getenv('DEBUG', 'False') == 'True')
 
 ALLOWED_HOSTS = []
 
@@ -66,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'mainapp.context_processors.basket',
             ],
         },
     },
@@ -106,9 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -137,3 +144,29 @@ MEDIA_ROOT = (
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # путь к медиа по методичке
 
 LOGIN_URL = '/auth/login/'
+
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = False
+
+# EMAIL_HOST = 'smpt.yandex.ru'
+# EMAIL_PRT = 465
+# EMAIL_HOST_USER = '@yandex.ru'
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_USE_SSL= True
+#
+# EMAIL_HOST = 'smpt.google.com'
+# EMAIL_PRT = 567
+# EMAIL_HOST_USER = '@gmail.com'
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_USE_SSL= False
+# EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
+
+# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# EMAIL_FILE_PATH = 'tmp/'
+
+BASE_URL = os.getenv('BASE_URL')
