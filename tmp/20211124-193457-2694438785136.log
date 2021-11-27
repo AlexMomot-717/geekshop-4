@@ -1,0 +1,11 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Account_activation
+From: django@gb.local
+To: ppp@yandex.ru
+Date: Wed, 24 Nov 2021 16:34:57 -0000
+Message-ID: <163777169757.11812.13153547027303296463@DESKTOP-SJO1I3A>
+
+Your activation url: http://127.0.0.1:8000/auth/verify/ppp@yandex.ru/3decf1a3bfa6d3513a000653a9310e21d465122f/
+-------------------------------------------------------------------------------

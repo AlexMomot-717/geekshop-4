@@ -1,0 +1,11 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Account_activation
+From: django@gb.local
+To: lll@gmail.ru
+Date: Wed, 24 Nov 2021 16:53:50 -0000
+Message-ID: <163777283039.7588.16905073046772376753@DESKTOP-SJO1I3A>
+
+Your activation url: http://127.0.0.1:8000/auth/verify/lll@gmail.ru/6ead28b4935953f0da11141cb391f9d2802312bf/
+-------------------------------------------------------------------------------
