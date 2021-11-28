@@ -1,7 +1,6 @@
 env/
 venv/
 .env
-.env.sample
 .idea/
 .vscode/
 __pycache__/
