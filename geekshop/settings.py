@@ -151,14 +151,12 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+ENV_TYPE = os.getenv('ENV_TYPE')
 
-# STATICFILES_DIRS = (
-#     BASE_DIR / 'static',
-# )
-
-STATIC_ROOT = (
-        BASE_DIR / 'static'
-)
+if ENV_TYPE == 'local':
+    STATICFILES_DIRS = BASE_DIR / 'static',
+else:
+    STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = (
