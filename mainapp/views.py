@@ -1,10 +1,24 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from basketapp.models import Basket
-from mainapp.models import *
-from django.shortcuts import get_object_or_404
 import random
+
+from django.conf import settings
+from django.core.cache import cache
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+
+from mainapp.models import *
+
+
+def get_links_menu():
+    if settings.LOW_CACHE:
+        key = 'categories'
+        links_menu = cache.get(key)
+        if links_menu is None:
+            links_menu = ProductCategory.objects.filter(is_active=True)
+            cache.set(key, links_menu)
+        return links_menu
+
+    return ProductCategory.objects.filter(is_active=True)
 
 
 def get_hot_product():
@@ -12,7 +26,8 @@ def get_hot_product():
 
 
 def get_same_products(hot_product):
-    products_list = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk).select_related()[:3]
+    products_list = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk).select_related()[
+                    :3]
     return products_list
 
 
@@ -32,7 +47,7 @@ def contact(request):
 
 
 def products(request, pk=None, page=1):
-# def products(request, pk=None):  # через передачу GET-параметров.
+    # def products(request, pk=None):  # через передачу GET-параметров.
     title = 'Продукты'
     links_menu = ProductCategory.objects.all()
 
