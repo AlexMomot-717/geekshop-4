@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -5,6 +6,19 @@ from basketapp.models import Basket
 from mainapp.models import *
 from django.shortcuts import get_object_or_404
 import random
+from django.core.cache import cache
+
+
+def get_links_menu():
+    if settings.LOW_CACHE:
+        key = 'categories'
+        links_menu = cache.get(key)
+        if links_menu is None:
+            links_menu = ProductCategory.objects.filter(is_active=True)
+            cache.set(key, links_menu)
+        return links_menu
+
+    return ProductCategory.objects.filter(is_active=True)
 
 
 def get_hot_product():
