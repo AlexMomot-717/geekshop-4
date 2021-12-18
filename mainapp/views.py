@@ -5,7 +5,7 @@ from django.core.cache import cache
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
-
+from django.views.decorators.cache import cache_page
 from mainapp.models import *
 
 
@@ -38,8 +38,7 @@ def get_hot_product():
 
 
 def get_same_products(hot_product):
-    products_list = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk).select_related()[
-                    :3]
+    products_list = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk).select_related()[:3]
     return products_list
 
 
@@ -58,6 +57,7 @@ def contact(request):
     return render(request, 'mainapp/contact.html', context)
 
 
+@cache_page(3600)
 def products(request, pk=None, page=1):
     # def products(request, pk=None):  # через передачу GET-параметров.
     title = 'Продукты'
