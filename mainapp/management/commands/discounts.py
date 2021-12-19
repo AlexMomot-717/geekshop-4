@@ -55,7 +55,7 @@ class Command(BaseCommand):
                 action_3_price,
                 output_field=DecimalField(),
             )
-        )
+        ).order_by('action_order')
 
         for item in orders_items_list:
-            print(f'{item.action_order}: заказ №{item.pk}: {item.product.name}: {item.discount_price}: {item.order.updated_at - item.order.created_at}')
+            print(f'{item.action_order:3}: заказ №{item.pk:3}: {item.product.name:15}: {item.discount_price:6.2f}: {item.order.updated_at - item.order.created_at}')
