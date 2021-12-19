@@ -29,10 +29,10 @@ class TestMainappSmoke(TestCase):
         response = self.client.get('/contact/')
         self.assertEqual(response.status_code, self.status_ok)
 
-    # def test_products_urls(self):
-    #     for product in Product.objects.all():
-    #         response = self.client.get(f'/products/product/{product.pk}/')
-    #         self.assertEqual(response.status_code, self.status_ok)
+    def test_products_urls(self):
+        for product in Product.objects.all():
+            response = self.client.get(f'/products/product/{product.pk}/')
+            self.assertEqual(response.status_code, self.status_ok)
 
     def test_categories_urls(self):
         for cat in ProductCategory.objects.all():
