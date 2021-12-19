@@ -152,7 +152,7 @@ class ProductCategoryUpdateView(AccessMixin, UpdateView):
     model = ProductCategory
     template_name = 'adminapp/category_form.html'
     form_class = ProductCategoryEditForm
-
+    success_url = reverse_lazy('adminapp:category_list')
 
     def form_valid(self, form):
         if 'discount' in form.cleaned_data:
@@ -163,8 +163,7 @@ class ProductCategoryUpdateView(AccessMixin, UpdateView):
 
         return super().form_valid(form)
 
-    def get_success_url(self):
-        return reverse('adminapp:category_list', args=[self.kwargs.get('pk')])
+
 
 
 # @user_passes_test(lambda u: u.is_superuser)
