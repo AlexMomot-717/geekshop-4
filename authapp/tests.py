@@ -104,4 +104,4 @@ class AuthUserTestCase(TestCase):
 
         response = self.client.post('/auth/register/', data=new_user_data)
         self.assertEqual(response.status_code, self.status_ok)
-        self.assertFormError(response, 'register_form', 'age', 'Вы слишком молоды!')
+        self.assertFormError(response, 'register_form', 'age', 'Слишком молод!')
