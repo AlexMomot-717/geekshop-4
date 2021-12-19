@@ -58,4 +58,4 @@ class Command(BaseCommand):
         )
 
         for item in orders_items_list:
-            print(f'{item.action_order}: заказ №{item.pk}: {item.product_name}: {item.discount_price}: {item.order.updated_at - item.order.created_at}')
+            print(f'{item.action_order}: заказ №{item.pk}: {item.product.name}: {item.discount_price}: {item.order.updated_at - item.order.created_at}')
