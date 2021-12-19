@@ -3,6 +3,7 @@ from django.test.client import Client
 
 # from mainapp.models import ProductCategory, Product
 from authapp.models import ShopUser
+from mainapp.models import Product, ProductCategory
 
 
 class AuthUserTestCase(TestCase):
@@ -15,6 +16,17 @@ class AuthUserTestCase(TestCase):
     def setUp(self):
         self.client = Client()
 
+        self.category = ProductCategory.objects.create(
+            name='cat1'
+        )
+        for i in range(10):
+            Product.objects.create(
+                name=f'prod-{i}',
+                category=self.category,
+                short_desc='shortdesc',
+                description='desc',
+            )
+
         self.superuser = ShopUser.objects.create_superuser(
             username=self.username,
             password=self.password,
@@ -25,15 +37,22 @@ class AuthUserTestCase(TestCase):
         self.assertEqual(response.status_code, self.status_ok)
 
         self.assertTrue(response.context['user'].is_anonymous)
-        self.assertNotContains(response, 'ПОЛЬЗОВАТЕЛЬ', status_code=self.status_ok)
+        self.assertNotContains(response, 'Пользователь', status_code=self.status_ok)
 
         self.client.login(username=self.username, password=self.password)
 
-        response = self.client.get('auth/login/')
+        response = self.client.get('/auth/login/')
         self.assertFalse(response.context['user'].is_anonymous)
         self.assertEqual(response.status_code, self.status_ok)
         response = self.client.get('/')
-        self.assertContains(response, 'ПОЛЬЗОВАТЕЛЬ', status_code=self.status_ok)
+        self.assertContains(response, 'Пользователь', status_code=self.status_ok)
+
+
+    def test_redirect(self):
+        product = Product.objects.first()
+        response = self.client.get(f'/basket/add/{product.pk}/')
+        self.assertEqual(response.status_code, self.status_redirect)
+
 
     # def test_register(self):
 
