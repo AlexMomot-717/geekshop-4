@@ -6,7 +6,7 @@ from mainapp.models import ProductCategory, Product
 
 class TestMainappSmoke(TestCase):
     status_ok = 200
-    status_redirect = 302
+    # status_redirect = 302
 
     def setUp(self):
         self.category = ProductCategory.objects.create(
@@ -26,13 +26,13 @@ class TestMainappSmoke(TestCase):
         response = self.client.get('/')
         self.assertEqual(response.status_code, self.status_ok)
 
-        response = self.client.get('/contacts/')
+        response = self.client.get('/contact/')
         self.assertEqual(response.status_code, self.status_ok)
 
-    def test_products_urls(self):
-        for product in Product.objects.all():
-            response = self.client.get(f'/products/product/{product.pk}/')
-            self.assertEqual(response.status_code, self.status_ok)
+    # def test_products_urls(self):
+    #     for product in Product.objects.all():
+    #         response = self.client.get(f'/products/product/{product.pk}/')
+    #         self.assertEqual(response.status_code, self.status_ok)
 
     def test_categories_urls(self):
         for cat in ProductCategory.objects.all():
