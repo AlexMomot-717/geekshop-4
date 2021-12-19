@@ -5,7 +5,7 @@ from django.core.cache import cache
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
-from django.views.decorators.cache import cache_page
+from django.views.decorators.cache import cache_page, never_cache
 from mainapp.models import *
 
 
